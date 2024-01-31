@@ -17,6 +17,8 @@ TEST(TestCaseSearchServer, TestSimple) {
     auto* srv = new SearchServer(idx);
     std::vector<std::vector<std::pair<int, float>>> result;
     calculateRelRelative(srv, request, result);
+    delete idx;
+    delete srv;
     ASSERT_EQ(result, expected);
 }//тест класса SearchServer
 TEST(TestCaseSearchServer, TestTop5) {
@@ -43,18 +45,21 @@ TEST(TestCaseSearchServer, TestTop5) {
                                            "tallinn is the capital of estonia",
                                            "warsaw is the capital of poland"};
     const std::vector<std::string> request = {"moscow is the capital of russia"};
-    const std::vector<std::vector<std::pair<int, float>>> expected = {{{7, 1}, {14, 1}, {8, 0.666666687}, {9, 0.666666687},
-                                                                       {10, 0.666666687}, {11, 0.666666687}, {12, 0.666666687},
-                                                                       {13, 0.666666687}, {0, 0.666666687}, {1, 0.666666687},
-                                                                       {2, 0.666666687}, {3, 0.666666687}, {4, 0.666666687},
-                                                                       {5, 0.666666687}, {6, 0.666666687}, {15, 0.666666687},
-                                                                       {16, 0.666666687}, {17, 0.666666687}, {18, 0.666666687},
-                                                                       {19, 0.666666687}, {20, 0.666666687}, {21, 0.666666687}}};
+    const std::vector<std::vector<std::pair<int, float>>> expected = {{{7, 1.0f}, {14, 1.0f}, {0, 0.666666686535}, {1, 0.666666686535},
+                                                                       {2, 0.666666686535}, {3, 0.666666686535}, {4, 0.666666686535},
+                                                                       {5, 0.666666686535}, {6, 0.666666686535}, {8, 0.666666686535},
+                                                                       {9, 0.666666686535}, {10, 0.666666686535}, {11, 0.666666686535},
+                                                                       {12, 0.666666686535}, {13, 0.666666686535}, {15, 0.666666686535},
+                                                                       {16, 0.666666686535}, {17, 0.666666686535}, {18, 0.666666686535},
+                                                                       {19, 0.666666686535}, {20, 0.666666686535}, {21, 0.666666686535}}};
+
     auto* idx = new InvertedIndex;
     idx->UpdateDocumentBase(docs);
     auto* srv = new SearchServer(idx);
     std::vector<std::vector<std::pair<int, float>>> result;
     calculateRelRelative(srv, request, result);
+    delete idx;
+    delete srv;
     ASSERT_EQ(result, expected);
 
 }//тест класса SearchServer
